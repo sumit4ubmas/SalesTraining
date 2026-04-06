@@ -1,7 +1,6 @@
 {
   "name": "sales-training-platform",
   "private": true,
-  "packageManager": "pnpm@10.2.0",
   "scripts": {
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
