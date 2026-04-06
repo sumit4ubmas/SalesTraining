@@ -1,0 +1,27 @@
+{
+  "name": "@sales-training/mobile",
+  "private": true,
+  "main": "expo/AppEntry",
+  "scripts": {
+    "dev": "expo start",
+    "lint": "eslint ./src ./App.tsx",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "build": "echo 'Expo build is managed by EAS workflow'"
+  },
+  "dependencies": {
+    "@sales-training/types": "workspace:*",
+    "@sales-training/ui": "workspace:*",
+    "@sales-training/utils": "workspace:*",
+    "expo": "~52.0.25",
+    "expo-status-bar": "~2.0.1",
+    "react": "18.3.1",
+    "react-native": "0.76.6"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.18",
+    "@types/react-native": "^0.73.0",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
