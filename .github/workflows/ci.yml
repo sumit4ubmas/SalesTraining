@@ -5,59 +5,30 @@ on:
   push:
     branches: [main, master]
 
+permissions:
+  contents: read
+
 jobs:
-  lint:
+  checks:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-      - run: pnpm install --no-frozen-lockfile
-      - run: pnpm lint
+    strategy:
+      fail-fast: false
+      matrix:
+        task: [lint, typecheck, test, build]
 
-  typecheck:
-    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-      - run: pnpm install --no-frozen-lockfile
-      - run: pnpm typecheck
+      - uses: actions/checkout@v5
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: pnpm
-      - run: pnpm install --no-frozen-lockfile
-      - run: pnpm test
 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-      - run: pnpm install --no-frozen-lockfile
-      - run: pnpm build
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Run ${{ matrix.task }}
+        run: pnpm ${{ matrix.task }}
