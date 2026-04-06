@@ -19,20 +19,15 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10.2.0
-          run_install: false
-
       - uses: actions/setup-node@v5
         with:
           node-version: 22
 
-      - name: Verify pnpm
-        run: pnpm --version
+      - name: Enable Corepack
+        run: corepack enable
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: corepack pnpm@10.2.0 install --no-frozen-lockfile
 
       - name: Run ${{ matrix.task }}
-        run: pnpm ${{ matrix.task }}
+        run: corepack pnpm@10.2.0 ${{ matrix.task }}
